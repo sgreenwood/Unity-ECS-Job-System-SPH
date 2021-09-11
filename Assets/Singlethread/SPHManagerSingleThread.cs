@@ -87,10 +87,6 @@ public class SPHManagerSingleThread : MonoBehaviour
     [SerializeField] private int parameterID = 0;
     [SerializeField] private SPHParameters[] parameters = null;
 
-    [Header("Properties")]
-    [SerializeField] private int amount = 250;
-    [SerializeField] private int rowSize = 16;
-
     // Data
     private SPHParticle[] particles;
 
@@ -117,6 +113,8 @@ public class SPHManagerSingleThread : MonoBehaviour
 
     private void InitSPH()
     {
+        int amount = GameController.numObjects;
+        int rowSize = (int)Mathf.Sqrt(amount);
         particles = new SPHParticle[amount];
         
         for (int i = 0; i < amount; i++)

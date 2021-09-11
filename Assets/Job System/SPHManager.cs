@@ -13,11 +13,6 @@ public class SPHManager : MonoBehaviour
     [SerializeField] private GameObject sphColliderPrefab = null;
     private EntityManager manager;
 
-    // Properties
-    [Header("Properties")]
-    [SerializeField] private int amount = 5000;
-
-
 
     private void Start()
     {
@@ -27,7 +22,7 @@ public class SPHManager : MonoBehaviour
 
         // Setup
         AddColliders();
-        AddParticles(amount);
+        AddParticles(GameController.numObjects);
     }
 
 
@@ -70,5 +65,15 @@ public class SPHManager : MonoBehaviour
 
         // Done
         entities.Dispose();
+    }
+
+    private void OnDestroy()
+    {
+        EntityManager entityManager = World.Active.EntityManager;
+
+        using (var allEntities = entityManager.GetAllEntities(Allocator.Temp))
+        {
+            entityManager.DestroyEntity(allEntities);
+        }
     }
 }
